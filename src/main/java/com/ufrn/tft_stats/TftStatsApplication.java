@@ -1,7 +1,9 @@
 package com.ufrn.tft_stats;
 
 import com.ufrn.tft_stats.domain.ChampionStats;
+import com.ufrn.tft_stats.domain.TraitStats;
 import com.ufrn.tft_stats.repository.ChampionStatsRepository;
+import com.ufrn.tft_stats.repository.TraitStatsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,10 +17,12 @@ public class TftStatsApplication {
     }
 
     @Bean
-    public CommandLineRunner carregarDadosDeTeste(ChampionStatsRepository repository) {
+    public CommandLineRunner carregarDadosDeTeste(
+            ChampionStatsRepository championRepository,
+            TraitStatsRepository traitRepository) {
+        
         return args -> {
-            System.out.println("Salvando dados de teste no banco...");
-            
+            System.out.println("A guardar dados de teste na base de dados...");
             ChampionStats leona = new ChampionStats("16.11", "TFT17_Leona", 2);
             leona.setTotalMatches(100L);
             leona.setWinCount(20L);
@@ -31,10 +35,25 @@ public class TftStatsApplication {
             karma.setTop4Count(10L);
             karma.setSumPlacement(300L);
 
-            repository.save(leona);
-            repository.save(karma);
+            championRepository.save(leona);
+            championRepository.save(karma);
+
+            TraitStats darkStar = new TraitStats("16.11", "TFT17_DarkStar", 1);
+            darkStar.setTotalMatches(200L);
+            darkStar.setWinCount(30L);
+            darkStar.setTop4Count(100L);
+            darkStar.setSumPlacement(900L);
+
+            TraitStats mecha = new TraitStats("16.11", "TFT17_Mecha", 3);
+            mecha.setTotalMatches(40L);
+            mecha.setWinCount(15L); 
+            mecha.setTop4Count(35L);
+            mecha.setSumPlacement(90L);
+
+            traitRepository.save(darkStar);
+            traitRepository.save(mecha);
             
-            System.out.println("Dados de teste salvos com sucesso!");
+            System.out.println("Dados de teste guardados com sucesso!");
         };
     }
 }

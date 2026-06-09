@@ -7,21 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ParticipantDto {
     private int placement;
     private List<UnitDto> units;
+    private List<TraitDto> traits;
 
-    // Getters e Setters
-    public int getPlacement() {
-        return placement;
-    }
+    public int getPlacement() { return placement; }
+    public void setPlacement(int placement) { this.placement = placement; }
 
-    public void setPlacement(int placement) {
-        this.placement = placement;
-    }
+    public List<UnitDto> getUnits() { return units; }
+    public void setUnits(List<UnitDto> units) { this.units = units; }
 
-    public List<UnitDto> getUnits() {
-        return units;
-    }
-
-    public void setUnits(List<UnitDto> units) {
-        this.units = units;
-    }
+    public List<TraitDto> getTraits() { return traits; }
+    public void setTraits(List<TraitDto> traits) { this.traits = traits; }
 }

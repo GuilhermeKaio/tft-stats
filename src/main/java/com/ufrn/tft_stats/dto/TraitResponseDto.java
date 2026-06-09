@@ -1,24 +1,24 @@
 package com.ufrn.tft_stats.dto;
 
-public class ChampionResponseDto {
-    private String championId;
-    private Integer tier;
+public class TraitResponseDto {
+    private String traitId;
+    private Integer tierCurrent;
     private Long totalMatches;
     private Double winRate;
     private Double top4Rate;
     private Double avgPlacement;
 
-    public ChampionResponseDto(String championId, Integer tier, Long totalMatches, Double winRate, Double top4Rate, Double avgPlacement) {
-        this.championId = championId;
-        this.tier = tier;
+    public TraitResponseDto(String traitId, Integer tierCurrent, Long totalMatches, Double winRate, Double top4Rate, Double avgPlacement) {
+        this.traitId = traitId;
+        this.tierCurrent = tierCurrent;
         this.totalMatches = totalMatches;
         this.winRate = winRate;
         this.top4Rate = top4Rate;
         this.avgPlacement = avgPlacement;
     }
 
-    public String getChampionId() { return championId; }
-    public Integer getTier() { return tier; }
+    public String getTraitId() { return traitId; }
+    public Integer getTierCurrent() { return tierCurrent; }
     public Long getTotalMatches() { return totalMatches; }
     public Double getWinRate() { return winRate; }
     public Double getTop4Rate() { return top4Rate; }
