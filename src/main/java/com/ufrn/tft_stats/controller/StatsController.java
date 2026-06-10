@@ -1,11 +1,13 @@
 package com.ufrn.tft_stats.controller;
 
 import com.ufrn.tft_stats.dto.ChampionResponseDto;
+import com.ufrn.tft_stats.dto.ItemResponseDto;
 import com.ufrn.tft_stats.dto.TraitResponseDto;
 import com.ufrn.tft_stats.service.StatsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -13,19 +15,44 @@ import java.util.List;
 @RequestMapping("/api/v1/meta")
 public class StatsController {
 
-    private final StatsService statsService;
+	private final StatsService statsService;
 
-    public StatsController(StatsService statsService) {
-        this.statsService = statsService;
-    }
+	public StatsController(StatsService statsService) {
+		this.statsService = statsService;
+	}
 
-    @GetMapping("/champions")
-    public List<ChampionResponseDto> getChampions() {
-        return statsService.getChampionsMeta();
-    }
-    
-    @GetMapping("/traits")
-    public List<TraitResponseDto> getTraits() {
-        return statsService.getTraitsMeta();
-    }
+	@GetMapping("/champions")
+	public List<ChampionResponseDto> getChampions() {
+		return statsService.getChampionsMeta();
+	}
+
+	@GetMapping("/traits")
+	public List<TraitResponseDto> getTraits() {
+		return statsService.getTraitsMeta();
+	}
+
+	@GetMapping("/items")
+	public List<ItemResponseDto> getItems() {
+		return statsService.getItemsMeta();
+	}
+
+	@GetMapping("/champion/{championId}")
+	public List<ChampionResponseDto> getChampionById(@PathVariable String championId) {
+		return statsService.getChampionMetaById(championId);
+	}
+
+	@GetMapping("/items/champion/{championId}")
+	public List<ItemResponseDto> getItemsByChampionId(@PathVariable String championId) {
+		return statsService.getItemsMetaByChampionId(championId);
+	}
+
+	@GetMapping("/items/item/{itemId}")
+	public List<ItemResponseDto> getItemsByItemId(@PathVariable String itemId) {
+		return statsService.getItemsMetaByItemId(itemId);
+	}
+
+	@GetMapping("/traits/{traitId}")
+	public List<TraitResponseDto> getTraitById(@PathVariable String traitId) {
+		return statsService.getTraitMetaById(traitId);
+	}
 }

@@ -6,6 +6,9 @@ import com.ufrn.tft_stats.dto.ChampionResponseDto;
 import com.ufrn.tft_stats.dto.TraitResponseDto;
 import com.ufrn.tft_stats.repository.ChampionStatsRepository;
 import com.ufrn.tft_stats.repository.TraitStatsRepository;
+import com.ufrn.tft_stats.domain.ItemStats;
+import com.ufrn.tft_stats.dto.ItemResponseDto;
+import com.ufrn.tft_stats.repository.ItemStatsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,66 +17,156 @@ import java.util.List;
 @Service
 public class StatsService {
 
-    private final ChampionStatsRepository championRepository;
-    private final TraitStatsRepository traitRepository;
+	private final ChampionStatsRepository championRepository;
+	private final TraitStatsRepository traitRepository;
+	private final ItemStatsRepository itemRepository;
 
-    public StatsService(ChampionStatsRepository championRepository, TraitStatsRepository traitRepository) {
-        this.championRepository = championRepository;
-        this.traitRepository = traitRepository;
-    }
+	public StatsService(ChampionStatsRepository championRepository, TraitStatsRepository traitRepository,
+			ItemStatsRepository itemRepository) {
+		this.championRepository = championRepository;
+		this.traitRepository = traitRepository;
+		this.itemRepository = itemRepository;
+	}
 
-    public List<ChampionResponseDto> getChampionsMeta() {
-        List<ChampionStats> allStats = championRepository.findAll();
-        List<ChampionResponseDto> responseList = new ArrayList<>();
+	public List<ChampionResponseDto> getChampionsMeta() {
+		List<ChampionStats> allStats = championRepository.findAll();
+		List<ChampionResponseDto> responseList = new ArrayList<>();
 
-        for (ChampionStats stats : allStats) {
-            if (stats.getTotalMatches() == 0) continue;
+		for (ChampionStats stats : allStats) {
+			if (stats.getTotalMatches() == 0)
+				continue;
 
-            double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
-            double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
-            double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-            winRate = Math.round(winRate * 100.0) / 100.0;
-            top4Rate = Math.round(top4Rate * 100.0) / 100.0;
-            avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
+			winRate = Math.round(winRate * 100.0) / 100.0;
+			top4Rate = Math.round(top4Rate * 100.0) / 100.0;
+			avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
 
-            responseList.add(new ChampionResponseDto(
-                    stats.getChampionId(),
-                    stats.getTier(),
-                    stats.getTotalMatches(),
-                    winRate,
-                    top4Rate,
-                    avgPlacement
-            ));
-        }
+			responseList.add(new ChampionResponseDto(stats.getChampionId(), stats.getTier(), stats.getTotalMatches(),
+					winRate, top4Rate, avgPlacement));
+		}
 
-        return responseList;
-    }
-    
-    public List<TraitResponseDto> getTraitsMeta() {
-        List<TraitStats> allStats = traitRepository.findAll();
-        List<TraitResponseDto> responseList = new ArrayList<>();
+		return responseList;
+	}
 
-        for (TraitStats stats : allStats) {
-            if (stats.getTotalMatches() == 0) continue;
+	public List<TraitResponseDto> getTraitsMeta() {
+		List<TraitStats> allStats = traitRepository.findAll();
+		List<TraitResponseDto> responseList = new ArrayList<>();
 
-            double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
-            double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
-            double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+		for (TraitStats stats : allStats) {
+			if (stats.getTotalMatches() == 0)
+				continue;
 
-            winRate = Math.round(winRate * 100.0) / 100.0;
-            top4Rate = Math.round(top4Rate * 100.0) / 100.0;
-            avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-            responseList.add(new TraitResponseDto(
-                    stats.getTraitId(),
-                    stats.getTierCurrent(),
-                    stats.getTotalMatches(),
-                    winRate,
-                    top4Rate,
-                    avgPlacement
-            ));
-        }
-        return responseList;
-    }
+			winRate = Math.round(winRate * 100.0) / 100.0;
+			top4Rate = Math.round(top4Rate * 100.0) / 100.0;
+			avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
+
+			responseList.add(new TraitResponseDto(stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
+					winRate, top4Rate, avgPlacement));
+		}
+		return responseList;
+	}
+
+	public List<ItemResponseDto> getItemsMeta() {
+		List<ItemStats> allStats = itemRepository.findAll();
+		List<ItemResponseDto> responseList = new ArrayList<>();
+
+		for (ItemStats stats : allStats) {
+			if (stats.getTotalMatches() == 0)
+				continue;
+
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+
+			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
+					Math.round(avgPlacement * 100.0) / 100.0));
+		}
+		return responseList;
+	}
+
+	public List<ChampionResponseDto> getChampionMetaById(String championId) {
+		List<ChampionStats> statsList = championRepository.findByChampionId(championId);
+		List<ChampionResponseDto> responseList = new ArrayList<>();
+
+		for (ChampionStats stats : statsList) {
+			if (stats.getTotalMatches() == 0)
+				continue;
+
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+
+			responseList.add(new ChampionResponseDto(stats.getChampionId(), stats.getTier(), stats.getTotalMatches(),
+					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
+					Math.round(avgPlacement * 100.0) / 100.0));
+		}
+
+		return responseList;
+	}
+
+	public List<ItemResponseDto> getItemsMetaByChampionId(String championId) {
+		List<ItemStats> statsList = itemRepository.findByChampionId(championId);
+		List<ItemResponseDto> responseList = new ArrayList<>();
+
+		for (ItemStats stats : statsList) {
+			if (stats.getTotalMatches() == 0)
+				continue;
+
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+
+			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
+					Math.round(avgPlacement * 100.0) / 100.0));
+		}
+		return responseList;
+	}
+
+	public List<ItemResponseDto> getItemsMetaByItemId(String itemId) {
+		List<ItemStats> statsList = itemRepository.findByItemId(itemId);
+		List<ItemResponseDto> responseList = new ArrayList<>();
+
+		for (ItemStats stats : statsList) {
+			if (stats.getTotalMatches() == 0)
+				continue;
+
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+
+			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
+					Math.round(avgPlacement * 100.0) / 100.0));
+		}
+		return responseList;
+	}
+
+	public List<TraitResponseDto> getTraitMetaById(String traitId) {
+		List<TraitStats> statsList = traitRepository.findByTraitId(traitId);
+		List<TraitResponseDto> responseList = new ArrayList<>();
+
+		for (TraitStats stats : statsList) {
+			if (stats.getTotalMatches() == 0)
+				continue;
+
+			double winRate = ((double) stats.getWinCount() / stats.getTotalMatches()) * 100;
+			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
+			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
+
+			responseList.add(new TraitResponseDto(stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
+					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
+					Math.round(avgPlacement * 100.0) / 100.0));
+		}
+
+		return responseList;
+	}
 }
