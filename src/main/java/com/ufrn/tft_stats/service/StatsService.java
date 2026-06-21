@@ -10,6 +10,7 @@ import com.ufrn.tft_stats.domain.ItemStats;
 import com.ufrn.tft_stats.dto.ItemResponseDto;
 import com.ufrn.tft_stats.repository.ItemStatsRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class StatsService {
 		this.itemRepository = itemRepository;
 	}
 
+	@Cacheable("championsMeta")
 	public List<ChampionResponseDto> getChampionsMeta() {
 		List<ChampionStats> allStats = championRepository.findAll();
 		List<ChampionResponseDto> responseList = new ArrayList<>();
@@ -51,6 +53,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("traitsMeta")
 	public List<TraitResponseDto> getTraitsMeta() {
 		List<TraitStats> allStats = traitRepository.findAll();
 		List<TraitResponseDto> responseList = new ArrayList<>();
@@ -73,6 +76,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("itemsMeta")
 	public List<ItemResponseDto> getItemsMeta() {
 		List<ItemStats> allStats = itemRepository.findAll();
 		List<ItemResponseDto> responseList = new ArrayList<>();
@@ -92,6 +96,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("championById")
 	public List<ChampionResponseDto> getChampionMetaById(String championId) {
 		List<ChampionStats> statsList = championRepository.findByChampionId(championId);
 		List<ChampionResponseDto> responseList = new ArrayList<>();
@@ -112,6 +117,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("itemsByChampion")
 	public List<ItemResponseDto> getItemsMetaByChampionId(String championId) {
 		List<ItemStats> statsList = itemRepository.findByChampionId(championId);
 		List<ItemResponseDto> responseList = new ArrayList<>();
@@ -131,6 +137,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("itemsByItem")
 	public List<ItemResponseDto> getItemsMetaByItemId(String itemId) {
 		List<ItemStats> statsList = itemRepository.findByItemId(itemId);
 		List<ItemResponseDto> responseList = new ArrayList<>();
@@ -150,6 +157,7 @@ public class StatsService {
 		return responseList;
 	}
 
+	@Cacheable("traitById")
 	public List<TraitResponseDto> getTraitMetaById(String traitId) {
 		List<TraitStats> statsList = traitRepository.findByTraitId(traitId);
 		List<TraitResponseDto> responseList = new ArrayList<>();

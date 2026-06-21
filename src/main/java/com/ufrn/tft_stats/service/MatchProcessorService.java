@@ -6,6 +6,7 @@ import com.ufrn.tft_stats.repository.ChampionStatsRepository;
 import com.ufrn.tft_stats.repository.ItemStatsRepository;
 import com.ufrn.tft_stats.repository.TraitStatsRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.CacheEvict;
 
 @Service
 public class MatchProcessorService {
@@ -21,6 +22,8 @@ public class MatchProcessorService {
 		this.itemRepository = itemRepository;
 	}
 
+	@CacheEvict(value = { "championsMeta", "itemsMeta", "traitsMeta", "championById", "itemsByChampion", "itemsByItem",
+			"traitById" }, allEntries = true)
 	public void processMatch(RiotMatchDto matchDto) {
 		String patch = extractPatchVersion(matchDto.getInfo().getGame_version());
 
@@ -51,7 +54,7 @@ public class MatchProcessorService {
 					}
 				}
 			}
-			
+
 			if (participant.getUnits() != null) {
 				for (UnitDto unit : participant.getUnits()) {
 					if (unit.getCharacter_id() == null || unit.getCharacter_id().isEmpty()) {
