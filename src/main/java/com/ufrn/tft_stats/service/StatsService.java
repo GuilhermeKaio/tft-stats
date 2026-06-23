@@ -46,8 +46,8 @@ public class StatsService {
 			top4Rate = Math.round(top4Rate * 100.0) / 100.0;
 			avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
 
-			responseList.add(new ChampionResponseDto(stats.getChampionId(), stats.getTier(), stats.getTotalMatches(),
-					winRate, top4Rate, avgPlacement));
+			responseList.add(new ChampionResponseDto(stats.getPatch(), stats.getChampionId(), stats.getTier(),
+					stats.getTotalMatches(), winRate, top4Rate, avgPlacement));
 		}
 
 		return responseList;
@@ -70,7 +70,7 @@ public class StatsService {
 			top4Rate = Math.round(top4Rate * 100.0) / 100.0;
 			avgPlacement = Math.round(avgPlacement * 100.0) / 100.0;
 
-			responseList.add(new TraitResponseDto(stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
+			responseList.add(new TraitResponseDto(stats.getPatch(), stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
 					winRate, top4Rate, avgPlacement));
 		}
 		return responseList;
@@ -89,7 +89,7 @@ public class StatsService {
 			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
 			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+			responseList.add(new ItemResponseDto(stats.getPatch(), stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
 					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
 					Math.round(avgPlacement * 100.0) / 100.0));
 		}
@@ -109,7 +109,7 @@ public class StatsService {
 			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
 			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-			responseList.add(new ChampionResponseDto(stats.getChampionId(), stats.getTier(), stats.getTotalMatches(),
+			responseList.add(new ChampionResponseDto(stats.getPatch(), stats.getChampionId(), stats.getTier(), stats.getTotalMatches(),
 					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
 					Math.round(avgPlacement * 100.0) / 100.0));
 		}
@@ -130,7 +130,7 @@ public class StatsService {
 			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
 			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+			responseList.add(new ItemResponseDto(stats.getPatch(), stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
 					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
 					Math.round(avgPlacement * 100.0) / 100.0));
 		}
@@ -150,7 +150,7 @@ public class StatsService {
 			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
 			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-			responseList.add(new ItemResponseDto(stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
+			responseList.add(new ItemResponseDto(stats.getPatch(), stats.getChampionId(), stats.getItemId(), stats.getTotalMatches(),
 					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
 					Math.round(avgPlacement * 100.0) / 100.0));
 		}
@@ -170,7 +170,7 @@ public class StatsService {
 			double top4Rate = ((double) stats.getTop4Count() / stats.getTotalMatches()) * 100;
 			double avgPlacement = (double) stats.getSumPlacement() / stats.getTotalMatches();
 
-			responseList.add(new TraitResponseDto(stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
+			responseList.add(new TraitResponseDto(stats.getPatch(), stats.getTraitId(), stats.getTierCurrent(), stats.getTotalMatches(),
 					Math.round(winRate * 100.0) / 100.0, Math.round(top4Rate * 100.0) / 100.0,
 					Math.round(avgPlacement * 100.0) / 100.0));
 		}

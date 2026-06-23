@@ -1,6 +1,7 @@
 package com.ufrn.tft_stats.dto;
 
 public class ChampionResponseDto {
+	private String patch;
     private String championId;
     private Integer tier;
     private Long totalMatches;
@@ -8,8 +9,9 @@ public class ChampionResponseDto {
     private Double top4Rate;
     private Double avgPlacement;
 
-    public ChampionResponseDto(String championId, Integer tier, Long totalMatches, Double winRate, Double top4Rate, Double avgPlacement) {
-        this.championId = championId;
+    public ChampionResponseDto(String patch, String championId, Integer tier, Long totalMatches, Double winRate, Double top4Rate, Double avgPlacement) {
+    	this.patch = patch;
+    	this.championId = championId;
         this.tier = tier;
         this.totalMatches = totalMatches;
         this.winRate = winRate;
@@ -23,4 +25,5 @@ public class ChampionResponseDto {
     public Double getWinRate() { return winRate; }
     public Double getTop4Rate() { return top4Rate; }
     public Double getAvgPlacement() { return avgPlacement; }
+    public String getPatch() { return patch; }
 }
