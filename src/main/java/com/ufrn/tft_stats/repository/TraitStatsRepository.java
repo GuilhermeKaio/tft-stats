@@ -9,5 +9,10 @@ import java.util.List;
 
 @Repository
 public interface TraitStatsRepository extends JpaRepository<TraitStats, TraitStatsId> {
+
+	List<TraitStats> findByPatch(String patch);
+
 	List<TraitStats> findByTraitId(String traitId);
+
+	List<TraitStats> findByTraitIdAndPatch(String traitId, String patch);
 }

@@ -8,5 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ChampionStatsRepository extends JpaRepository<ChampionStats, ChampionStatsId> {
+	List<ChampionStats> findByPatch(String patch);
+
+	List<ChampionStats> findByChampionIdAndPatch(String championId, String patch);
+
 	List<ChampionStats> findByChampionId(String championId);
 }

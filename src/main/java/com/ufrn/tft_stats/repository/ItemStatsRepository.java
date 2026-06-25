@@ -9,7 +9,14 @@ import java.util.List;
 
 @Repository
 public interface ItemStatsRepository extends JpaRepository<ItemStats, ItemStatsId> {
+
+	List<ItemStats> findByPatch(String patch);
+
 	List<ItemStats> findByChampionId(String championId);
 
-    List<ItemStats> findByItemId(String itemId);
+	List<ItemStats> findByChampionIdAndPatch(String championId, String patch);
+
+	List<ItemStats> findByItemId(String itemId);
+
+	List<ItemStats> findByItemIdAndPatch(String itemId, String patch);
 }

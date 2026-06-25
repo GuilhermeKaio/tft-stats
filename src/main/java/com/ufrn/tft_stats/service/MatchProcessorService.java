@@ -8,6 +8,12 @@ import com.ufrn.tft_stats.repository.TraitStatsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.CacheEvict;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class MatchProcessorService {
 
@@ -75,6 +81,29 @@ public class MatchProcessorService {
 						cStats.setTop4Count(cStats.getTop4Count() + 1);
 					if (isWin)
 						cStats.setWinCount(cStats.getWinCount() + 1);
+
+					// ==========================================
+					// NOVA LÓGICA DE COMBOS DE ITENS (JSONB)
+					// ==========================================
+					List<String> items = unit.getItemNames();
+					if (items != null && items.size() == 3) {
+						List<String> sortedItems = new ArrayList<>(items);
+						Collections.sort(sortedItems);
+						String comboKey = String.join(" | ", sortedItems);
+
+						Map<String, ItemComboStats> combos = cStats.getItemCombos();
+						if (combos == null) {
+							combos = new HashMap<>();
+							cStats.setItemCombos(combos);
+						}
+
+						ItemComboStats currentCombo = combos.getOrDefault(comboKey, new ItemComboStats(0, 0, 0));
+						currentCombo.setTotalMatches(currentCombo.getTotalMatches() + 1);
+						if (isWin) currentCombo.setWinCount(currentCombo.getWinCount() + 1);
+						if (isTop4) currentCombo.setTop4Count(currentCombo.getTop4Count() + 1);
+
+						combos.put(comboKey, currentCombo);
+					}
 
 					championRepository.save(cStats);
 
